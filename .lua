@@ -201,7 +201,7 @@ T1:AddToggle({
 })
 
 T1:AddToggle({
-  Name = "Map vote",
+  Name = "Map vote [ Patched ]",
   Default = false,
   Callback = function(Value)
     game:GetService("Players")["LocalPlayer"]["PlayerGui"]["MainGui"]["MapVotePage"]["Visible"] = Value
@@ -217,7 +217,7 @@ T1:AddToggle({
       
          while wait() do
          if _G.FallDamage == false then break end
-             game:GetService("Workspace")[game.Players.LocalPlayer.Name]["FallDamageScript"]:Destroy()
+             game["Players"]["LocalPlayer"]["FallDamageScript"]:Destroy()
          end
    end
 })
@@ -275,7 +275,8 @@ local function Repeat(R)
        end)
 end
 
-Repeat(Character)
+Repeat(game:GetService("Players").LocalPlayer.Character)
+disasterPredict()
 game:GetService("Players").LocalPlayer.CharacterAdded:connect(function(R)
        Repeat(R)
 end)
