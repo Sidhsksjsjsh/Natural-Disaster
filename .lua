@@ -270,23 +270,23 @@ end
 local function onEventAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "TornadoPart" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["TornadoPart"]:Destroy()
       elseif event.Name == "MeteorTemplate" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["MeteorTemplate"]:Destroy()
       elseif event.Name == "AcidRain" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["AcidRain"]:Destroy()
       elseif event.Name == "Lightning" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["Lightning"]:Destroy()
       elseif event.Name == "Cloud" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["Cloud"]:Destroy()
       elseif event.Name == "Dust" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["Dust"]:Destroy()
       elseif event.Name == "TsunamiWave" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["TsunamiWave"]:Destroy()
       elseif event.Name == "VirusParticles" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["VirusParticles"]:Destroy()
       elseif event.Name == "Lava" and _G.Safemode == true then
-        event:Destroy()
+        workspace["Structure"]["Lava"]:Destroy()
       end
   end)
 end
@@ -294,9 +294,9 @@ end
 local function onUIAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "SandStormGui" and _G.HideAnnoyUI == true then
-        event:Destroy()
+        game:GetService("Players")["LocalPlaye"]["PlayerGui"]["SandStormGui"]:Destroy()
       elseif event.Name == "BlizzardGui" and _G.HideAnnoyUI == true then
-        event:Destroy()
+        game:GetService("Players")["LocalPlaye"]["PlayerGui"]["BlizzardGui"]:Destroy()
       end
   end)
 end
@@ -321,7 +321,7 @@ end
 Repeat(game:GetService("Players").LocalPlayer.Character)
 disasterPredict()
 onEventAdded(workspace["Structure"])
+onUIAdded(game:GetService("Players")["LocalPlayer"]["PlayerGui"])
 game:GetService("Players").LocalPlayer.CharacterAdded:connect(function(R)
        Repeat(R)
-       onUIAdded(R["PlayerGui"])
 end)
