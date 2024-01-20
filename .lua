@@ -249,7 +249,7 @@ T4:AddToggle({
    end
 })
 
-local logdis = "No message received."
+local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
 local forLog = T5:AddParagraph("Disaster Debug",logdis)
 local function disasterPredict()
 if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and _G.leakenabled == true then
@@ -258,6 +258,10 @@ if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("Surviv
      elseif _G.LeakLogDisaster == true then
         logdis = logdis .. "\n" .. game:GetService("Players")["LocalPlayer"]["Character"]["SurvivalTag"]["Value"]
         forLog:Set(logdis)
+    elseif _G.LeakLogDisaster == true and _G.LeakDisasternotify == true then
+        logdis = logdis .. "\n" .. game:GetService("Players")["LocalPlayer"]["Character"]["SurvivalTag"]["Value"]
+        forLog:Set(logdis)
+        OrionLib:MakeNotification({Name = "Current disaster",Content = game:GetService("Players")["LocalPlayer"]["Character"]["SurvivalTag"]["Value"],Time = 10})
     end
 end
 end
@@ -270,6 +274,10 @@ local function Repeat(R)
             elseif _G.LeakLogDisaster == true then
               logdis = logdis .. "\n" .. Find.Value
               forLog:Set(logdis)
+          elseif _G.LeakLogDisaster == true and _G.LeakDisasternotify == true then
+              logdis = logdis .. "\n" .. Find.Value
+              forLog:Set(logdis)
+              OrionLib:MakeNotification({Name = "Current disaster",Content = Find.Value,Time = 10})
             end
            end
        end)
