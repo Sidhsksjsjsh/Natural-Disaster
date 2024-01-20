@@ -201,24 +201,19 @@ T1:AddToggle({
 })
 
 T1:AddToggle({
-  Name = "Map vote [ Patched ]",
+  Name = "Safe mode - Removed all disaster objects",
   Default = false,
   Callback = function(Value)
-    game:GetService("Players")["LocalPlayer"]["PlayerGui"]["MainGui"]["MapVotePage"]["Visible"] = Value
+    _G.Safemode = Value
   end
 })
 
 
 T1:AddToggle({
-  Name = "Remove fall damage",
+  Name = "Remove sandstorm and blizzard UI",
   Default = false,
   Callback = function(Value)
-    _G.FallDamage = Value
-      
-         while wait() do
-         if _G.FallDamage == false then break end
-             game["Players"]["LocalPlayer"]["FallDamageScript"]:Destroy()
-         end
+    _G.HideAnnoyUI = Value
    end
 })
 
@@ -266,6 +261,46 @@ if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("Surviv
 end
 end
 
+local function getChild(int,func)
+  for i,v in pairs(workspace.Structure:GetChildren()) do
+    func(i,v)
+  end
+end
+
+local function onEventAdded(ux)
+  ux.ChildAdded:connect(function(event)
+    if event.Name == "TornadoPart" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "MeteorTemplate" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "AcidRain" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "Lightning" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "Cloud" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "Dust" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "TsunamiWave" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "VirusParticles" and _G.Safemode == true then
+        event:Destroy()
+      elseif event.Name == "Lava" and _G.Safemode == true then
+        event:Destroy()
+      end
+  end)
+end
+
+local function onUIAdded(ux)
+  ux.ChildAdded:connect(function(event)
+    if event.Name == "SandStormGui" and _G.HideAnnoyUI == true then
+        event:Destroy()
+      elseif event.Name == "BlizzardGui" and _G.HideAnnoyUI == true then
+        event:Destroy()
+      end
+  end)
+end
+
 local function Repeat(R)
    R.ChildAdded:connect(function(Find)
            if Find.Name == "SurvivalTag" and _G.leakenabled == true then
@@ -285,6 +320,8 @@ end
 
 Repeat(game:GetService("Players").LocalPlayer.Character)
 disasterPredict()
+onEventAdded(workspace["Structure"])
 game:GetService("Players").LocalPlayer.CharacterAdded:connect(function(R)
        Repeat(R)
+       onUIAdded(R["PlayerGui"])
 end)
