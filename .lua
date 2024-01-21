@@ -262,31 +262,53 @@ end
 end
 
 local function getChild(int,func)
-  for i,v in pairs(workspace.Structure:GetChildren()) do
-    func(i,v)
-  end
+  workspace["Structure"][int].ChildAdded:connect(function(event)
+      if event then
+        for i,v in pairs(workspace.Structure[int]:GetChildren()) do
+             func(i,v)
+        end
+      else
+        workspace["Structure"][int]:Destroy()
+      end
+    end)
 end
 
 local function onEventAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "TornadoPart" and _G.Safemode == true then
-        workspace["Structure"]["TornadoPart"]:Destroy()
+        getChild("TornadoPart",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "MeteorTemplate" and _G.Safemode == true then
-        workspace["Structure"]["MeteorTemplate"]:Destroy()
+        getChild("MeteorTemplate",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "AcidRain" and _G.Safemode == true then
         workspace["Structure"]["AcidRain"]:Destroy()
       elseif event.Name == "Lightning" and _G.Safemode == true then
-        workspace["Structure"]["Lightning"]:Destroy()
+        getChild("Lightning",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "Cloud" and _G.Safemode == true then
-        workspace["Structure"]["Cloud"]:Destroy()
+        workspace["Structure"]["Cloud"]["Mesh"]:Destroy()
       elseif event.Name == "Dust" and _G.Safemode == true then
-        workspace["Structure"]["Dust"]:Destroy()
+        getChild("Dust",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "TsunamiWave" and _G.Safemode == true then
-        workspace["Structure"]["TsunamiWave"]:Destroy()
+        getChild("TsunamiWave",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "VirusParticles" and _G.Safemode == true then
-        workspace["Structure"]["VirusParticles"]:Destroy()
+        getChild("VirusParticles",function(i,v)
+            v:Destroy()
+        end)
       elseif event.Name == "Lava" and _G.Safemode == true then
         workspace["Structure"]["Lava"]:Destroy()
+      elseif event.Name == "MeteorFolder" then
+        getChild("MeteorFolder",function(i,v)
+            v:Destroy()
+        end)
       end
   end)
 end
@@ -294,9 +316,9 @@ end
 local function onUIAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "SandStormGui" and _G.HideAnnoyUI == true then
-        game:GetService("Players")["LocalPlaye"]["PlayerGui"]["SandStormGui"]:Destroy()
+        game:GetService("Players")["LocalPlayer"]["PlayerGui"]["SandStormGui"]:Destroy()
       elseif event.Name == "BlizzardGui" and _G.HideAnnoyUI == true then
-        game:GetService("Players")["LocalPlaye"]["PlayerGui"]["BlizzardGui"]:Destroy()
+        game:GetService("Players")["LocalPlayer"]["PlayerGui"]["BlizzardGui"]:Destroy()
       end
   end)
 end
