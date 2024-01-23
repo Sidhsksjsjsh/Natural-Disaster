@@ -44,24 +44,27 @@ local xraysettings = {
 	fill = Color3.new(0,1,0),
 	outline = Color3.new(1,1,1),
 	filltrans = 0,
-	outtrans = 0
+	outtrans = 0,
+	enab = false
 }
 
 local function HighlightPlayer()
 	for i,v in pairs(game:GetService("Players"):GetPlayers()) do
-  if v.Character:FindFirstChild("TURTLE-XRAY") then
-      v.Character["TURTLE-XRAY"]:Destroy()
-	end
+            if v.Character:FindFirstChild("TURTLE-XRAY") then
+               v.Character["TURTLE-XRAY"]:Destroy()
+	    end
 
-             local esp = Instance.new("Highlight")
-             esp.Name = "TURTLE-XRAY"
-             esp.FillColor = xraysettings.fill
-             esp.OutlineColor = xraysettings.outline
-             esp.FillTransparency = xraysettings.filltrans
-             esp.OutlineTransparency = xraysettings.outtrans
-             esp.Adornee = v.Character
-	           esp.Parent = v.Character
-             esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+	     if xraysettings.enab == true then
+                local esp = Instance.new("Highlight")
+                esp.Name = "TURTLE-XRAY"
+                esp.FillColor = xraysettings.fill
+                esp.OutlineColor = xraysettings.outline
+                esp.FillTransparency = xraysettings.filltrans
+                esp.OutlineTransparency = xraysettings.outtrans
+                esp.Adornee = v.Character
+	        esp.Parent = v.Character
+                esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+	     end
 	end
 end
 
@@ -239,6 +242,15 @@ T1:AddToggle({
   Default = false,
   Callback = function(Value)
     _G.HideAnnoyUI = Value
+   end
+})
+
+T1:AddToggle({
+  Name = "Visual XRAY",
+  Default = true,
+  Callback = function(Value)
+    xraysettings.enab = Value
+    HighlightPlayer()
    end
 })
 
