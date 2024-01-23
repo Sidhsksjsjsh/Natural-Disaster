@@ -1,6 +1,7 @@
 local StarterGui = game:GetService("StarterGui")
 local TweenService = game:GetService("TweenService")
 local workspace = game:GetService("Workspace")
+local user = game.Players.LocalPlayer
 
 privateProperties = {
 Color = Color3.fromRGB(0,255,255); 
@@ -268,6 +269,20 @@ T4:AddButton({
   end
 })
 
+T4:AddButton({
+  Name = "TP to lobby",
+  Callback = function()
+    user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-243,194,331)
+  end
+})
+
+T4:AddButton({
+  Name = "TP to map",
+  Callback = function()
+    user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-117,47,5)
+  end
+})
+
 T4:AddToggle({
   Name = "AFK win farm",
   Default = false,
@@ -276,7 +291,7 @@ T4:AddToggle({
       
          while wait() do
          if _G.FFarm == false then break end
-             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-269,180,382)
+             user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-269,180,382)
          end
    end
 })
