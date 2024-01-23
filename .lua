@@ -40,6 +40,31 @@ function Sound2()
   end
 end
 
+local xraysettings = {
+	fill = Color3.new(0,1,0),
+	outline = Color3.new(1,1,1),
+	filltrans = 0,
+	outtrans = 0
+}
+
+local function HighlightPlayer()
+	for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+  if v.Character:FindFirstChild("TURTLE-XRAY") then
+      v.Character["TURTLE-XRAY"]:Destroy()
+	end
+
+             local esp = Instance.new("Highlight")
+             esp.Name = "TURTLE-XRAY"
+             esp.FillColor = xraysettings.fill
+             esp.OutlineColor = xraysettings.outline
+             esp.FillTransparency = xraysettings.filltrans
+             esp.OutlineTransparency = xraysettings.outtrans
+             esp.Adornee = v.Character
+	           esp.Parent = v.Character
+             esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+	end
+end
+
 local Social = "Tiktok: @capviktor, YT: Entity, \nMy roblox username Rivanda_Cheater and CookieProgamming (2nd acc)"
 
 local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/NMEHkVTb"))()
@@ -346,4 +371,5 @@ onEventAdded(workspace["Structure"])
 onUIAdded(game:GetService("Players")["LocalPlayer"]["PlayerGui"])
 game:GetService("Players").LocalPlayer.CharacterAdded:connect(function(R)
        Repeat(R)
+       HighlightPlayer()
 end)
