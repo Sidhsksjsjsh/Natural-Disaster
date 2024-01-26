@@ -341,8 +341,8 @@ end
 
 local function instantDelete()
   workspace["Structure"].ChildAdded:connect(function(event)
-      for i,v in pairs(workspace["Structure"][event]:GetChildren()) do
-	if event:IsA("Folder") then
+      for i,v in pairs(workspace["Structure"][event or "Cloud"]:GetChildren()) do
+	if event:IsA("Folder") and i ~= 1 then
 		v:Destroy()
 	else
 		event:Destroy()
