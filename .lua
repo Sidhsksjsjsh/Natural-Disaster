@@ -270,6 +270,13 @@ T4:AddButton({
 })
 
 T4:AddButton({
+  Name = "Tween TP to lobby + spectating other player",
+  Callback = function()
+    TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{CFrame = CFrame.new(-240,194,297)}):Play()
+  end
+})
+
+T4:AddButton({
   Name = "TP to lobby",
   Callback = function()
     user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-243,194,331)
@@ -280,6 +287,13 @@ T4:AddButton({
   Name = "TP to map",
   Callback = function()
     user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-117,47,5)
+  end
+})
+
+T4:AddButton({
+  Name = "TP to lobby + spectating other player",
+  Callback = function()
+    user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-240,194,297)
   end
 })
 
@@ -325,6 +339,18 @@ local function getChild(int,func)
     end)
 end
 
+local function instantDelete()
+  workspace["Structure"].ChildAdded:connect(function(event)
+      for i,v in pairs(workspace["Structure"][event]:GetChildren()) do
+	if event:IsA("Folder") then
+		v:Destroy()
+	else
+		event:Destroy()
+	end
+      end
+    end)
+end
+
 local function onEventAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "TornadoPart" and _G.Safemode == true then
@@ -361,6 +387,18 @@ local function onEventAdded(ux)
         getChild("MeteorFolder",function(i,v)
             v:Destroy()
         end)
+      elseif event.Name == "TsunamiBouncy" then
+	getChild("TsunamiBouncy",function(i,v)
+            v:Destroy()
+        end)
+      elseif event.Name == "SlimeHolder" then
+	getChild("SlimeHolder",function(i,v)
+            v:Destroy()
+        end)
+      elseif event.Name == "AcidRain" then
+	getChild("AcidRain",function(i,v)
+            v:Destroy()
+        end)
       end
   end)
 end
@@ -395,6 +433,7 @@ end
 Repeat(game:GetService("Players").LocalPlayer.Character)
 disasterPredict()
 onEventAdded(workspace["Structure"])
+instantDelete()
 onUIAdded(game:GetService("Players")["LocalPlayer"]["PlayerGui"])
 game:GetService("Players").LocalPlayer.CharacterAdded:connect(function(R)
        Repeat(R)
