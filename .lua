@@ -208,7 +208,7 @@ T4:Button("TP to lobby ( Outside )",function()
 end)
 
 T4:Toggle("AFK win farm",false,function(value)
-    var.winfarm = Value
+    var.winfarm = value
       
      while wait() do
          if var.winfarm == false then break end
