@@ -73,11 +73,11 @@ local Social = "Tiktok: @capviktor, YT: Entity, \nMy roblox username Rivanda_Che
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Sidhsksjsjsh/VAPE-UI-MODDED/main/.lua"))()
 local wndw = lib:Window("VIP Turtle Hub V4")
-local T1 = wndw:Tab("Main")
+local T1 = wndw:Tab("Main",true)
 local T2 = wndw:Tab("Sound")
 local T3 = wndw:Tab("Character")
 local T4 = wndw:Tab("Teleports")
-local T5 = wndw:Tab("Disaster Log")
+local T5 = wndw:Tab("Disaster Log",true)
 
 local var = {
 	spamsound = false,
@@ -153,7 +153,7 @@ T2:Toggle("Kill sound service",false,function(value)
          end
     end)
 
-T1:Toggle("Enabled disaster",false,function(value)
+T1:Toggle("Enabled disaster",true,function(value)
     var.disaster.enabled = value
 end)
 
@@ -174,12 +174,12 @@ T1:Toggle("Log disaster",false,function(value)
     var.disaster.log = value
 end)
 
-T1:Toggle("Remove all disaster object",false,function(value)
+T1:Toggle("Remove all disaster object",true,function(value)
     var.disaster.obj = value
 end)
 
 
-T1:Toggle("Remove Blizzard and Sandstorm UI",false,function(value)
+T1:Toggle("Remove Blizzard and Sandstorm UI",true,function(value)
     var.disaster.annoyui = value
 end)
 
