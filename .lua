@@ -2,13 +2,14 @@ local StarterGui = game:GetService("StarterGui")
 local TweenService = game:GetService("TweenService")
 local workspace = game:GetService("Workspace")
 local user = game.Players.LocalPlayer
+local TextChatService = game:GetService("TextChatService")
 
 privateProperties = {
 Color = Color3.fromRGB(0,255,255); 
 Font = Enum.Font.SourceSansBold;
 TextSize = 11;
 }
-
+--TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("Fans?")
 local CL = false
 
 local Asset = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
@@ -89,7 +90,8 @@ local var = {
 		log = false,
 		notify = true,
 		obj = true,
-		annoyui = true
+		annoyui = true,
+		cht = true
 	},
 	time = {
 		SECOND = math.floor(tick() % 60),
@@ -183,6 +185,10 @@ T1:Toggle("Remove Blizzard and Sandstorm UI",true,function(value)
     var.disaster.annoyui = value
 end)
 
+T1:Toggle("Leak disaster in chat",true,function(value)
+    var.disaster.cht = value
+end)
+
 T4:Button("Tween to lobby",function()
     TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{CFrame = CFrame.new(-243,194,331)}):Play()
 end)
@@ -225,6 +231,8 @@ if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("Surviv
      elseif var.disaster.log == true then
         logdis = logdis .. "\n" .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
         forLog:EditLabel(logdis)
+     elseif var.disaster.cht == true then
+	TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
     elseif var.disaster.log == true and var.disaster.notify == true then
         logdis = logdis .. "\n" .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
         forLog:EditLabel(logdis)
@@ -312,7 +320,7 @@ local function onEventAdded(ux)
       end
   end)
 end
-
+--TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("Fans?")
 local function onUIAdded(ux)
   ux.ChildAdded:connect(function(event)
     if event.Name == "SandStormGui" and var.disaster.annoyui == true then
@@ -331,6 +339,8 @@ local function Repeat(R)
             elseif var.disaster.log == true then
               logdis = logdis .. "\n" .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
               forLog:EditLabel(logdis)
+	    elseif var.disaster.cht == true then
+		TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. Find.Value)
           elseif var.disaster.log == true and var.disaster.notify == true then
               logdis = logdis .. "\n" .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
               forLog:EditLabel(logdis)
@@ -339,8 +349,6 @@ local function Repeat(R)
            end
        end)
 end
-
-lib:WarnUser(lib:ColorFonts("Im Fall in love with u 😍💕","Pink"))
 
 lib:runtime(function()
 	var.time.HOUR = math.floor((tick() % 86400) / 3600)
