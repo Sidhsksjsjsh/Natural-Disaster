@@ -234,7 +234,7 @@ T4:Toggle("AFK win farm",false,function(value)
 end)
 --Enum.CoreGuiType.Backpack
 if user.Name == "Rivanda_Cheater" then
-local models = ""
+local models = "null"
 local txt = "null"
 	
 local T6 = wndw:Tab("AI Panels",true)
@@ -249,10 +249,10 @@ T6:Textbox("Commands",false,function(value)
 end)
 
 T6:Button("Generate response",function()
-	if txt ~= "null" then
+	if txt ~= "null" and models ~= "null" then
+		ailab:EditLabel(models .. "\nGenerating response...")
+		wait(1.5)
 		lib:TurtleAI(txt,models,function(array)
-			ailab:EditLabel(models .. "\nGenerating response...")
-			wait(1.5)
 			ailab:EditLabel(models .. "\n\n" .. array)
 		end)
 	else
@@ -269,7 +269,7 @@ if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("Surviv
         lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
      end
      if var.disaster.log == true then
-        logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" | ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+        logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
         forLog:EditLabel(logdis)
      end
      if var.disaster.cht == true then
@@ -375,7 +375,7 @@ local function Repeat(R)
               lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
 	    end
             if var.disaster.log == true then
-              logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" | ","Gray") .. lib:ColorFonts(Find.Value,"Red")
+              logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(Find.Value,"Red")
               forLog:EditLabel(logdis)
 	    end
 	    if var.disaster.cht == true then
