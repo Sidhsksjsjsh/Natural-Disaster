@@ -240,36 +240,26 @@ local txetdebug = ""
 local numbtext = 0
 	
 local T6 = wndw:Tab("AI Panels",true)
-local ailab = T6:Label("AI Models")
+local ailab = T6:Label("${models} ${return.string}")
 	
-T6:Dropdown("Choose AI Models",{"Top result : wikipedia","Entire article : wikipedia","Summarize paragraph AI","Google Flan T5","GPT2 Sentence Completion","Chessy chuck norris jokes","Book searching"},function(value)
+T6:Dropdown("Choose AI Models",{"Top result : wikipedia","Entire article : wikipedia","Summarize paragraph AI","Google Flan T5","GPT2 Sentence Completion","Chessy chuck norris jokes","Book searching","Google Gemini V1"},function(value)
 	models = value
 end)
 
-T6:Textbox("Commands",false,function(value)
+T6:Textbox("Query / AI Textboxes",false,function(value)
 	txt = value
 end)
 
 T6:Button("Generate response",function()
 	if txt ~= "null" and models ~= "null" then
-		ailab:EditLabel(models .. "\nGenerating response...")
+		ailab:EditLabel(models .. "\n\nGenerating response...")
 		wait(1.5)
 		lib:TurtleAI(txt,models,function(array)
 			ailab:EditLabel(models .. "\n\n" .. array)
-			txetdebug = #array
 		end)
 	else
 		ailab:EditLabel(lib:ColorFonts("Commands is null, pls fill it","Red"))
 	end
-end)
-
-
-T6:Textbox("Enter length text number",false,function(value)
-	numbtext = tonumber(value)
-end)
-	
-T6:Button("Text Debugging",function()
-	ailab:EditLabel(models .. "\n\n" .. array:sub(1,numbtext))
 end)
 
 end
