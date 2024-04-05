@@ -236,6 +236,8 @@ end)
 if user.Name == "Rivanda_Cheater" then
 local models = "null"
 local txt = "null"
+local txetdebug = ""
+local numbtext = 0
 	
 local T6 = wndw:Tab("AI Panels",true)
 local ailab = T6:Label("AI Models")
@@ -254,11 +256,22 @@ T6:Button("Generate response",function()
 		wait(1.5)
 		lib:TurtleAI(txt,models,function(array)
 			ailab:EditLabel(models .. "\n\n" .. array)
+			txetdebug = #array
 		end)
 	else
 		ailab:EditLabel(lib:ColorFonts("Commands is null, pls fill it","Red"))
 	end
 end)
+
+
+T6:Textbox("Enter length text number",false,function(value)
+	numbtext = tonumber(value)
+end)
+	
+T6:Button("Text Debugging",function()
+	ailab:EditLabel(models .. "\n\n" .. array:sub(1,numbtext))
+end)
+
 end
 
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
