@@ -3,12 +3,14 @@ local TweenService = game:GetService("TweenService")
 local workspace = game:GetService("Workspace")
 local user = game.Players.LocalPlayer
 local TextChatService = game:GetService("TextChatService")
+local StarterGui = game:GetService("StarterGui")
 
-privateProperties = {
-Color = Color3.fromRGB(0,255,255); 
-Font = Enum.Font.SourceSansBold;
-TextSize = 11;
+local privateProperties = {
+	Color = Color3.fromRGB(0,255,255); 
+	Font = Enum.Font.SourceSansBold;
+	TextSize = 11;
 }
+
 --TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("Fans?")
 local CL = false
 
@@ -85,9 +87,10 @@ local var = {
 	mutesound = false,
 	killsound = false,
 	winfarm = false,
+	inv = false,
 	disaster = {
 		enabled = true,
-		log = false,
+		log = true,
 		notify = true,
 		obj = true,
 		annoyui = true,
@@ -189,6 +192,14 @@ T1:Toggle("Leak disaster in chat",true,function(value)
     var.disaster.cht = value
 end)
 
+T1:Toggle("Enable inventory",false,function(value)
+	var.inv = value
+	while wait() do
+		if var.inv == false then break end
+			StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack,true)
+	end
+end)
+
 T4:Button("Tween to lobby",function()
     TweenService:Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0),{CFrame = CFrame.new(-243,194,331)}):Play()
 end)
@@ -221,7 +232,7 @@ T4:Toggle("AFK win farm",false,function(value)
              user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-269,180,382)
      end
 end)
-
+--Enum.CoreGuiType.Backpack
 if user.Name == "Rivanda_Cheater" then
 local models = ""
 local txt = "null"
@@ -258,7 +269,7 @@ if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("Surviv
         lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
      end
      if var.disaster.log == true then
-        logdis = logdis .. "\n" .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+        logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" | ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
         forLog:EditLabel(logdis)
      end
      if var.disaster.cht == true then
@@ -364,7 +375,7 @@ local function Repeat(R)
               lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
 	    end
             if var.disaster.log == true then
-              logdis = logdis .. "\n" .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+              logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" | ","Gray") .. lib:ColorFonts(Find.Value,"Red")
               forLog:EditLabel(logdis)
 	    end
 	    if var.disaster.cht == true then
