@@ -222,22 +222,47 @@ T4:Toggle("AFK win farm",false,function(value)
      end
 end)
 
+if user.Name == "Rivanda_Cheater" then
+local models = ""
+local txt = "null"
+	
+local T6 = wndw:Tab("AI Panels",true)
+local ailab = T6:Label("AI Models")
+	
+T6:Dropdown("Choose AI Models",{"Top result : wikipedia","Entire article : wikipedia","Summarize paragraph AI","Google Flan T5","GPT2 Sentence Completion","Chessy chuck norris jokes","Book searching"},function(value)
+	models = value
+end)
+
+T6:Textbox("Commands",false,function(value)
+	txt = value
+end)
+
+T6:Button("Generate response",function()
+	if txt ~= "null" then
+		lib:TurtleAI(txt,models,function(array)
+			ailab:EditLabel(models .. "\nGenerating response...")
+			wait(1.5)
+			ailab:EditLabel(models .. "\n\n" .. array)
+		end)
+	else
+		ailab:EditLabel(lib:ColorFonts("Commands is null, pls fill it","Red"))
+	end
+end
+
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
 local forLog = T5:Label(logdis)
 local function disasterPredict() --GetDisasterTime()
 if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and var.disaster.enabled == true then
      if var.disaster.notify == true then
         lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
-     elseif var.disaster.log == true then
+     end
+     if var.disaster.log == true then
         logdis = logdis .. "\n" .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
         forLog:EditLabel(logdis)
-     elseif var.disaster.cht == true then
+     end
+     if var.disaster.cht == true then
 	TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
-    elseif var.disaster.log == true and var.disaster.notify == true then
-        logdis = logdis .. "\n" .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
-        forLog:EditLabel(logdis)
-        lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
-    end
+     end
 end
 end
 
@@ -336,16 +361,14 @@ local function Repeat(R)
            if Find.Name == "SurvivalTag" and var.disaster.enabled == true then
             if var.disaster.notify == true then
               lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
-            elseif var.disaster.log == true then
+	    end
+            if var.disaster.log == true then
               logdis = logdis .. "\n" .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
               forLog:EditLabel(logdis)
-	    elseif var.disaster.cht == true then
+	    end
+	    if var.disaster.cht == true then
 		TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. Find.Value)
-          elseif var.disaster.log == true and var.disaster.notify == true then
-              logdis = logdis .. "\n" .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
-              forLog:EditLabel(logdis)
-              lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
-            end
+	   end
            end
        end)
 end
