@@ -247,6 +247,7 @@ T6:Button("Generate response",function()
 	else
 		ailab:EditLabel(lib:ColorFonts("Commands is null, pls fill it","Red"))
 	end
+end)
 end
 
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
