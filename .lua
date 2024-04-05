@@ -262,7 +262,58 @@ T6:Button("Generate response",function()
 	end
 end)
 
+local T7 = wndw:Tab("Debugging Panels",true)
+local debp = T6:Label("Debugging is off")
+
+local function debuggingfunction(Count,Line,Call,selfreturn)
+	debp:EditLabel("Developer debugging testing\nCall : " .. Call .. "\nLine : " .. Line .. "\nReturn : " .. selfreturn .. "\nCount : " .. Count)
 end
+
+debug.sethook(debuggingfunction,"crl",0)
+end
+
+--[[
+function myFunction(x, y)
+    return x + y
+end
+
+local info = debug.getinfo(myFunction)
+print("Nama fungsi:", info.name)
+print("Tipe fungsi:", info.namewhat)
+print("Baris definisi:", info.linedefined)
+print("Sumber kode:", info.source)
+
+-- Fungsi untuk mendapatkan nilai-nilai lokal dalam sebuah fungsi
+function myFunction2()
+    local a = 10
+    local b = 20
+    print(debug.getlocal(1, 1)) -- Output: 1   a   10
+    print(debug.getlocal(1, 2)) -- Output: 2   b   20
+end
+
+myFunction2()
+
+-- Fungsi untuk mendapatkan metatable dari sebuah objek
+local t = {}
+local mt = {}
+debug.setmetatable(t, mt)
+
+print(debug.getmetatable(t) == mt) -- Output: true
+
+-- Fungsi untuk menetapkan fungsi hook untuk eksekusi bytecode
+debug.sethook(function(event)
+    print("Event:", event)
+end, "l")
+
+-- Contoh penggunaan hook
+local function myFunction3()
+    local a = 5
+    local b = 10
+    return a + b
+end
+
+myFunction3()
+]]
 
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
 local forLog = T5:Label(logdis)
