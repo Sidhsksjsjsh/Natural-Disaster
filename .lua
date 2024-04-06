@@ -262,14 +262,6 @@ T6:Button("Generate response",function()
 	end
 end)
 
-local T7 = wndw:Tab("Debugging Panels",true)
-local debp = T6:Label("Debugging is off")
-
-local function debuggingfunction(Count,Line,Call,selfreturn)
-	debp:EditLabel("Developer debugging testing\nCall : " .. Call .. "\nLine : " .. Line .. "\nReturn : " .. selfreturn .. "\nCount : " .. Count)
-end
-
-debug.sethook(debuggingfunction,"crl",0)
 end
 
 --[[
