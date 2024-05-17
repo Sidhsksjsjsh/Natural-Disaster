@@ -264,6 +264,19 @@ end)
 
 end
 
+lib:DeveloperAccess(function()
+    local T100 = wndw:Tab("Developer",true)
+    T100:Button("Remote spy",function()
+        lib:RemoteSpy()
+    end)
+    T100:Button("Dex",function()
+        lib:DEX()
+    end)
+    T100:Button("Turtle explorer",function()
+        lib:TurtleExplorer()
+    end)
+end)
+
 --[[
 function myFunction(x, y)
     return x + y
@@ -430,7 +443,7 @@ local function Repeat(R)
            end
        end)
 end
-
+	
 lib:runtime(function()
 	var.time.HOUR = math.floor((tick() % 86400) / 3600)
 	var.time.MINUTE = math.floor((tick() % 3600) / 60)
