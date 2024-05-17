@@ -232,6 +232,41 @@ T4:Toggle("AFK win farm",false,function(value)
              user["Character"]["HumanoidRootPart"]["CFrame"] = CFrame.new(-269,180,382)
      end
 end)
+
+if game.PlaceId == 7057417395 then
+	local synt = {
+		apple = false,
+		vote = {1,false},
+		multidisaster = false,
+		multicount = 0
+	}
+
+	T1:Toggle("Auto heal ( equip red apple )",false,function(value)
+		synt.apple = value
+		while wait() do
+		if synt.apple == false then break end
+			if lib.getToolHandleEvent(user) == "RedApple" then
+				game:GetService("ReplicatedStorage")["Events"]["Misc"]["EatApple"]:FireServer(user.Character[lib.getToolHandleEvent(user)])
+			end
+		end
+	end)
+	--[[T1:Toggle("AFK win farm",false,function(value)
+		k
+	end)]]
+	T1:Toggle("Auto increase multi disaster",false,function(value)
+		synt.multidisaster = value
+		if value == false then
+			synt.multicount = 0
+		end
+			
+		while wait() do
+		if synt.multidisaster == false then break end
+			synt.multicount = synt.multicount + 1
+			game:GetService("ReplicatedStorage")["Events"]["Control"]["TogglePSC"]:FireServer(4,synt.multicount)
+		end
+	end)
+end
+
 --Enum.CoreGuiType.Backpack
 if user.Name == "Rivanda_Cheater" then
 local models = "null"
@@ -319,21 +354,39 @@ end
 
 myFunction3()
 7057417395
+lib.getElementChanged(instance,name,f)
 ]]
 
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
 local forLog = T5:Label(logdis)
 local function disasterPredict() --GetDisasterTime()
-	if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and var.disaster.enabled == true then
-		if var.disaster.notify == true then
-			lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
+	if game.PlaceId ~= 7057417395 then
+		if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and var.disaster.enabled == true then
+			if var.disaster.notify == true then
+				lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Bold"),"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
+			end
+			if var.disaster.log == true then
+				logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Bold"),"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+				forLog:EditLabel(logdis)
+			end
+			if var.disaster.cht == true then
+				TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
+			end
 		end
-		if var.disaster.log == true then
-			logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
-			forLog:EditLabel(logdis)
-		end
-		if var.disaster.cht == true then
-			TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
+	else
+		if user["PlayerGui"]["MainUI"]["Hint"]["List"]:FindFirstChild("HintText") and var.disaster.enabled == true then
+			lib.getElementChanged(user["PlayerGui"]["MainUI"]["Hint"]["List"]["HintText"],"Text",function()
+				if var.disaster.notify == true then
+					lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(lib:ColorFonts(user["PlayerGui"]["MainUI"]["Hint"]["List"]["HintText"]["Text"],"Bold"),"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
+				end
+				if var.disaster.log == true then
+					logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(lib:ColorFonts(user["PlayerGui"]["MainUI"]["Hint"]["List"]["HintText"]["Text"],"Bold"),"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+					forLog:EditLabel(logdis)
+				end
+				if var.disaster.cht == true then
+					TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["PlayerGui"]["MainUI"]["Hint"]["List"]["HintText"]["Text"])
+				end
+			end)
 		end
 	end
 end
@@ -349,7 +402,7 @@ local function getChild(int,func)
       end
     end)
 end
-
+--lib.getElementChanged(instance,name,f)
 local function instantDelete()
   workspace["Structure"].ChildAdded:connect(function(event)
 	if event:IsA("Folder") then
@@ -432,10 +485,10 @@ local function Repeat(R)
    R.ChildAdded:connect(function(Find)
            if Find.Name == "SurvivalTag" and var.disaster.enabled == true then
             if var.disaster.notify == true then
-              lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(Find.Value,"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
+              lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" | ","White") .. lib:ColorFonts(lib:ColorFonts(Find.Value,"Bold"),"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
 	    end
             if var.disaster.log == true then
-              logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(Find.Value,"Red")
+              logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(lib:ColorFonts(Find.Value,"Bold"),"Red")
               forLog:EditLabel(logdis)
 	    end
 	    if var.disaster.cht == true then
