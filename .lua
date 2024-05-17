@@ -318,23 +318,24 @@ local function myFunction3()
 end
 
 myFunction3()
+7057417395
 ]]
 
 local logdis = "Disaster will appear if you enabled 'Leak disaster [ Log ]'"
 local forLog = T5:Label(logdis)
 local function disasterPredict() --GetDisasterTime()
-if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and var.disaster.enabled == true then
-     if var.disaster.notify == true then
-        lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
-     end
-     if var.disaster.log == true then
-        logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
-        forLog:EditLabel(logdis)
-     end
-     if var.disaster.cht == true then
-	TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
-     end
-end
+	if game:GetService("Players")["LocalPlayer"]["Character"]:FindFirstChild("SurvivalTag") and var.disaster.enabled == true then
+		if var.disaster.notify == true then
+			lib:notify(lib:ColorFonts("⚠️ WARNING ⚠️","Red") .. lib:ColorFonts(" - ","White") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White"),10)
+		end
+		if var.disaster.log == true then
+			logdis = logdis .. "\n" .. lib:ColorFonts(GetDisasterTime(),"White") .. lib:ColorFonts(" -- ","Gray") .. lib:ColorFonts(user["Character"]["SurvivalTag"]["Value"],"Red") .. lib:ColorFonts(" | " .. GetDisasterTime(),"White")
+			forLog:EditLabel(logdis)
+		end
+		if var.disaster.cht == true then
+			TextChatService["TextChannels"]["RBXGeneral"]:SendAsync("⚠️ WARNING! ⚠️ | Current disaster is " .. user["Character"]["SurvivalTag"]["Value"])
+		end
+	end
 end
 
 local function getChild(int,func)
@@ -443,7 +444,7 @@ local function Repeat(R)
            end
        end)
 end
-	
+--7057417395
 lib:runtime(function()
 	var.time.HOUR = math.floor((tick() % 86400) / 3600)
 	var.time.MINUTE = math.floor((tick() % 3600) / 60)
