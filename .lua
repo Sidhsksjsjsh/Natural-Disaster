@@ -397,18 +397,7 @@ end)
 
 end
 
-lib:DeveloperAccess(function()
-    local T100 = wndw:Tab("Developer",true)
-    T100:Button("Remote spy",function()
-        lib:RemoteSpy()
-    end)
-    T100:Button("Dex",function()
-        lib:DEX()
-    end)
-    T100:Button("Turtle explorer",function()
-        lib:TurtleExplorer()
-    end)
-end)
+lib.DeveloperEncrypt(wndw)
 
 --[[
 function myFunction(x, y)
