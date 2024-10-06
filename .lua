@@ -81,13 +81,19 @@ local T2 = wndw:Tab("Sound")
 local T3 = wndw:Tab("Character")
 local T4 = wndw:Tab("Teleports")
 local T5 = wndw:Tab("Disaster Log",true)
+local T6 = wndw:Tab("Trolling",true)
 
+local sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
 local var = {
 	spamsound = false,
 	mutesound = false,
 	killsound = false,
 	winfarm = false,
 	inv = false,
+	tpua = false,
+	sradius = gethiddenproperty(user,"SimulationRadius"),
+	player = user.Name,
+	styles = "Normal",
 	disaster = {
 		enabled = true,
 		log = true,
@@ -107,6 +113,98 @@ local var = {
 		ap = "Null"
 	}
 }
+
+T6:Textbox("Victim name",false,function(value)
+	lib:TrackPlayer(value,function(v)
+		var.player = v.Name
+	end)
+end)
+
+T6:Dropdown("Unanchored teleport styles",{"Normal","Spin","Ring","Ring & Spin"},function(value)
+	var.styles = value
+end)
+
+local rotate = 0
+local touamet = T6:Toggle("Loop teleport unanchored to player",false,function(value)
+	var.tpua = value
+	if value == true then
+		sethiddenproperty(user,"SimulationRadius",1/0)
+	else
+		sethiddenproperty(user,"SimulationRadius",var.sradius)
+		rotate = 0
+	end
+end)
+
+T6:Button("Teleport unanchored to player",function()
+	lib:TrackPlayer(var.player,function(v)
+		if sethidden then
+			rotate = rotate + 1
+			sethidden(selfUser,"SimulationRadius",1/0)
+			lib:descendant(workspace,function(part)
+				if v.Character:FindFirstChild('Head') and part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") and part.Anchored == false and not part:IsDescendantOf(selfUser.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
+					if part:IsA("BodyPosition") or part:IsA("BodyGyro") then
+						part:Destroy()
+					end
+					local ForceInstance = Instance.new("BodyPosition")
+					ForceInstance.Parent = part
+					ForceInstance.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+					lib:children(part,function(c)
+						if part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") then
+							if var.styles == "Normal" then
+								c.Position = v.Character.Head.Position
+							elseif var.styles == "Spin" then
+								c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0)
+							elseif var.styles == "Ring" then
+								c.Position = v.Character.Head.Position + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
+							elseif var.styles == "Ring & Spin" then
+								c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0) + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
+							end
+						end
+					end)
+				end
+			end)
+		else
+			TurtleScreenNotify('Turtle Developer Panel | Incompatible Exploit','Your exploit does not support this command (missing sethiddenproperty)',{},nil,{})
+		end
+	end)
+end)
+
+lib:runtime(function()
+	if var.tpua == true then
+		lib:TrackPlayer(var.player,function(v)
+			if sethidden then
+				rotate = rotate + 1
+				lib:descendant(workspace,function(part)
+					if v.Character:FindFirstChild('Head') and part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") and part.Anchored == false and not part:IsDescendantOf(selfUser.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
+						if part:IsA("BodyPosition") or part:IsA("BodyGyro") then
+							part:Destroy()
+						end
+						local ForceInstance = Instance.new("BodyPosition")
+						ForceInstance.Parent = part
+						ForceInstance.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+						lib:children(part,function(c)
+							if part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") then
+								if var.styles == "Normal" then
+									c.Position = v.Character.Head.Position
+								elseif var.styles == "Spin" then
+									c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0)
+								elseif var.styles == "Ring" then
+									c.Position = v.Character.Head.Position + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
+								elseif var.styles == "Ring & Spin" then
+									c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0) + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
+								end
+							end
+						end)
+					end
+				end)
+			else
+				TurtleScreenNotify('Turtle Developer Panel | Incompatible Exploit','Your exploit does not support this command (missing sethiddenproperty)',{},nil,{})
+				touamet:Set(false)
+			end
+		end)
+	end
+end)
+
 --var.time.second
 T3:Slider("Speed",0,500,16,function(value)
     game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = value
