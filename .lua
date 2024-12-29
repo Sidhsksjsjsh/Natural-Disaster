@@ -124,6 +124,10 @@ T6:Dropdown("Unanchored teleport styles",{"Normal","Spin","Ring","Ring & Spin"},
 	var.styles = value
 end)
 
+T6:Slider("Top height",0,100,20,function(value)
+	TurtleFlags.HEIGHT = value
+end)
+
 local rotate = 0
 local touamet = T6:Toggle("Loop teleport unanchored to player",false,function(value)
 	var.tpua = value
@@ -152,8 +156,8 @@ T6:Button("Teleport unanchored to player",function()
 						if part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") then
 							if var.styles == "Normal" then
 								c.Position = v.Character.Head.Position
-							elseif var.styles == "Spin" then
-								c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0)
+							elseif var.styles == "Top" then
+								c.Position = v.Character.Head.Position * CFrame.Angles(math.rad(0),0,0) + Vector3.new(0,TurtleFlags.HEIGHT,0)
 							elseif var.styles == "Ring" then
 								c.Position = v.Character.Head.Position + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
 							elseif var.styles == "Ring & Spin" then
@@ -169,7 +173,7 @@ T6:Button("Teleport unanchored to player",function()
 	end)
 end)
 
-lib:runtime(function()
+lib:Loop(function()
 	if var.tpua == true then
 		lib:TrackPlayer(var.player,function(v)
 			if sethidden then
@@ -186,8 +190,8 @@ lib:runtime(function()
 							if part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model") then
 								if var.styles == "Normal" then
 									c.Position = v.Character.Head.Position
-								elseif var.styles == "Spin" then
-									c.Position = v.Character.Head.Position * CFrame.Angles(0,math.rad(rotate),0)
+								elseif var.styles == "Top" then
+									c.Position = v.Character.Head.Position * CFrame.Angles(math.rad(0),0,0) + Vector3.new(0,TurtleFlags.HEIGHT,0)
 								elseif var.styles == "Ring" then
 									c.Position = v.Character.Head.Position + Vector3.new(math.sin(tick()) * 5,0,math.cos(tick()) * 5)
 								elseif var.styles == "Ring & Spin" then
@@ -286,7 +290,7 @@ T1:Toggle("Remove Blizzard and Sandstorm UI",true,function(value)
     var.disaster.annoyui = value
 end)
 
-T1:Toggle("Leak disaster in chat",true,function(value)
+T1:Toggle("Leak disaster in chat",false,function(value)
     var.disaster.cht = value
 end)
 
